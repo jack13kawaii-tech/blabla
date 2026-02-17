@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0f111a" />
+  <title>Projeto 121 — Pontos</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header card">
+      <div class="header-left">
+        <div class="title">Projeto 121 — Pontos</div>
+        <div class="subtitle" id="countdown">⏳ …</div>
+      </div>
+
+      <div class="header-right">
+        <button class="btn btn-ghost" id="btnTarget">Alterar data alvo</button>
+        <div class="stat">
+          <div class="stat-label">Pontos</div>
+          <div class="stat-value" id="totalPoints">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Ranking</div>
+          <div class="stat-value" id="rank">Bronze</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="left">
+        <div class="card section">
+          <div class="section-head">
+            <div class="section-title">Calendário</div>
+            <div class="pill" id="selectedDatePill">—</div>
+          </div>
+
+          <div class="calendar">
+            <div class="cal-head">
+              <button class="btn btn-ghost btn-icon" id="prevMonth" aria-label="Mês anterior">‹</button>
+              <div class="cal-month" id="monthLabel">—</div>
+              <button class="btn btn-ghost btn-icon" id="nextMonth" aria-label="Próximo mês">›</button>
+            </div>
+            <div class="cal-weekdays">
+              <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+            </div>
+            <div class="cal-grid" id="calGrid"></div>
+
+            <div class="legend">
+              <span class="dot gain"></span> ganhos
+              <span class="dot loss"></span> perdas
+              <span class="dot both"></span> ambos
+            </div>
+          </div>
+        </div>
+
+        <div class="card section">
+          <div class="section-head">
+            <div class="section-title">Botões rápidos</div>
+            <div class="muted small">Um toque para registrar</div>
+          </div>
+
+          <div class="two-col">
+            <div>
+              <div class="subhead gain-text">Ganhar pontos</div>
+              <div class="grid" id="gainButtons"></div>
+            </div>
+            <div>
+              <div class="subhead loss-text">Perder pontos</div>
+              <div class="grid" id="lossButtons"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card section">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Histórico do dia</div>
+              <div class="muted small" id="daySummary">Saldo do dia: +0 pts</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="showAll" />
+              <span>Mostrar geral</span>
+            </label>
+          </div>
+
+          <div class="table-wrap">
+            <table class="table" id="dayTable">
+              <thead>
+                <tr>
+                  <th style="width: 72px;">Hora</th>
+                  <th>Ação</th>
+                  <th style="width: 70px; text-align:center;">Pts</th>
+                  <th style="width: 56px;"></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div class="actions-row">
+            <button class="btn btn-warn" id="btnResetDay">Resetar dia</button>
+            <button class="btn" id="btnManual">Adicionar nota/ajuste</button>
+            <button class="btn btn-ghost" id="btnExport">Exportar backup</button>
+            <button class="btn btn-ghost" id="btnImport">Importar backup</button>
+          </div>
+
+          <div class="table-wrap hidden" id="allWrap">
+            <div class="muted small" style="padding: 10px 2px 6px;">Histórico geral (até 200 registros mais recentes)</div>
+            <table class="table" id="allTable">
+              <thead>
+                <tr>
+                  <th style="width: 92px;">Data</th>
+                  <th style="width: 72px;">Hora</th>
+                  <th>Ação</th>
+                  <th style="width: 70px; text-align:center;">Pts</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div class="muted tiny" id="savePathHint">Salvo localmente neste celular (offline).</div>
+        </div>
+      </section>
+
+      <aside class="right card section">
+        <div class="section-head">
+          <div class="section-title">Prêmios</div>
+          <div class="muted small">Resgatar desconta pontos</div>
+        </div>
+
+        <div class="rewards" id="rewardsList"></div>
+
+        <div class="actions-row">
+          <button class="btn" id="btnRedeem">Resgatar</button>
+          <button class="btn btn-ghost" id="btnAddReward">Adicionar</button>
+          <button class="btn btn-ghost" id="btnDelReward">Excluir</button>
+        </div>
+
+        <div class="muted tiny">Dica: adicione à tela inicial no Chrome para virar “app”.</div>
+      </aside>
+    </main>
+  </div>
+
+  <input type="file" id="fileInput" accept="application/json" class="hidden" />
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('service-worker.js'));
+    }
+  </script>
+</body>
+</html>
